@@ -5,6 +5,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -16,9 +19,11 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class SecurityService {
 
+	private static final Logger log = LoggerFactory.getLogger(SecurityService.class);
 	@Value("${jwt.token.secret}")
 	private String secret;
 	@Value("${jwt.token.expiration}")
@@ -72,7 +77,10 @@ public class SecurityService {
 				.signWith(SignatureAlgorithm.HS256, getSignedKey())
 				.compact();
 
+		log.info(String.valueOf(token.split("./").length == 3));
+
 		return TokenDetails.builder()
+				.id((Long) (claims.get("id")))
 				.token(token)
 				.createdAt(now)
 				.issuedAt(expiration)

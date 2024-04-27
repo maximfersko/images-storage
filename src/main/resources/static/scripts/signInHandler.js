@@ -8,12 +8,11 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.forEach(function (value, key) {
             data[key] = value;
         });
+        console.log(data)
         var json = JSON.stringify(data);
-
         fetch("/api/v1/auth/sign-in", {
             method: "POST",
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
             },
             body: json
