@@ -1,0 +1,58 @@
+#uploadForm {
+    max-width: 300px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+
+#images {
+    margin-top: 25px;
+
+}
+
+#images div {
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #fff;
+}
+
+img {
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+#prev, #next {
+    margin: 10px;
+}
+
+#pages {
+    display: inline-block;
+    margin: 0 5px;
+}

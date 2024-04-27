@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Management</title>
+    <link href="styles/main.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Tabs Links -->
+<div class="tabs">
+    <button class="tab-link" onclick="openTab(event, 'upload')">Upload Image</button>
+    <button class="tab-link" onclick="openTab(event, 'view')">View Images</button>
+</div>
+
+<!-- Tab Content -->
+<div id="upload" class="tab-content">
+    <h2>Upload Image</h2>
+    <form id="uploadForm" enctype="multipart/form-data" method="POST">
+        <input name="file" type="file" id="fileInput"/>
+        <button type="submit" id="uploadButton">Upload</button>
+    </form>
+</div>
+
+<div id="view" class="tab-content">
+    <h2>View Images</h2>
+    <div id="images"></div>
+    <div id="pagination">
+        <button disabled id="prev">Previous Page</button>
+        <span id="page-info">Page 1 of X</span>
+        <button id="next">Next Page</button>
+    </div>
+    <div id="image-count">Showing X images on this page</div>
+</div>
+<script src="scripts/tabs.js"></script>
+<script src="scripts/imagesHandler.js" type="module"></script>
+<script src="scripts/pagination.js" type="module"></script>
+</body>
+</html>
