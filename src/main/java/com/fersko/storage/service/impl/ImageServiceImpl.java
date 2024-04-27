@@ -1,6 +1,5 @@
 package com.fersko.storage.service.impl;
 
-import com.fersko.storage.dto.ImageInfoDto;
 import com.fersko.storage.entity.Image;
 import com.fersko.storage.entity.User;
 import com.fersko.storage.exceptions.ImageNotFoundException;
@@ -8,14 +7,12 @@ import com.fersko.storage.mapper.ImageMapper;
 import com.fersko.storage.repository.ImageRepository;
 import com.fersko.storage.service.ImageService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -36,7 +33,6 @@ public class ImageServiceImpl implements ImageService {
 				.build();
 		return imageRepository.save(data);
 	}
-
 
 
 	@Override

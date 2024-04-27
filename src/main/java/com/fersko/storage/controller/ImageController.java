@@ -43,7 +43,7 @@ public class ImageController {
 				throw new RuntimeException(e);
 			}
 		}
-		return"redirect:/storage";
+		return "redirect:/storage";
 	}
 
 
@@ -55,13 +55,13 @@ public class ImageController {
 		return userService.extractInfo(username, PageRequest.of(page, 10));
 	}
 
-@GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-public ResponseEntity<byte[]> getImageById(@PathVariable("id") Long id) {
-	byte[] imageData = imageService.findImageById(id).getData();
-	if (imageData != null) {
-		return ResponseEntity.ok(imageData);
-	} else {
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	@GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+	public ResponseEntity<byte[]> getImageById(@PathVariable("id") Long id) {
+		byte[] imageData = imageService.findImageById(id).getData();
+		if (imageData != null) {
+			return ResponseEntity.ok(imageData);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
 	}
-}
 }

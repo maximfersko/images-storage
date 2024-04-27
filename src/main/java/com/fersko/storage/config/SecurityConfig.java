@@ -2,7 +2,6 @@ package com.fersko.storage.config;
 
 import com.fersko.storage.security.AuthenticationFilter;
 import com.fersko.storage.service.UserService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +20,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.List;
 
@@ -58,7 +56,6 @@ public class SecurityConfig {
 				.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
-
 
 
 	@Bean

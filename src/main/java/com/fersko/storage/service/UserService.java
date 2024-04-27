@@ -12,8 +12,10 @@ import java.util.List;
 public interface UserService {
 
 	UserDetails findByUsernameUserDetails(String username);
+
 	User findByUsername(String username);
-	List<ImageInfoDto> extractInfo(String username,Pageable pageable);
+
+	List<ImageInfoDto> extractInfo(String username, Pageable pageable);
 
 	User save(User user);
 

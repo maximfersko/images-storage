@@ -1,11 +1,11 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     var signUpForm = document.getElementById("signUp");
-    signUpForm.onsubmit = function(event) {
+    signUpForm.onsubmit = function (event) {
         event.preventDefault();
 
         var formData = new FormData(signUpForm);
         var data = {};
-        formData.forEach(function(value, key) {
+        formData.forEach(function (value, key) {
             data[key] = value;
         });
         var json = JSON.stringify(data);
@@ -20,7 +20,9 @@ document.addEventListener("DOMContentLoaded", function() {
             if (response.ok) {
                 window.location.href = "/signin.html";
             } else {
-                response.text().then(text => { throw new Error(text) });
+                response.text().then(text => {
+                    throw new Error(text)
+                });
             }
         }).catch(error => {
             console.error('Error during sign up:', error);

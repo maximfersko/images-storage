@@ -1,4 +1,4 @@
-import { currentPage, updatePagination } from './pagination.js';
+import {currentPage, updatePagination} from './pagination.js';
 
 
 async function fetchImages(page) {
@@ -40,7 +40,7 @@ async function fetchImages(page) {
 }
 
 
-document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+document.getElementById('uploadForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
     const fileInput = document.getElementById('fileInput');
