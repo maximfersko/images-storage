@@ -1,6 +1,6 @@
 let currentPage = 0;
 
-function updatePagination({ totalImages, currentPage, imagesPerPage }, fetchImagesCallback) {
+function updatePagination({totalImages, currentPage, imagesPerPage}, fetchImagesCallback) {
     const totalPages = Math.ceil(totalImages / imagesPerPage);
     const pageInfo = document.getElementById('page-info');
     const imageCount = document.getElementById('image-count');

@@ -12,6 +12,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findByUsername(String username);
+
 	@Query("SELECT i FROM Image i WHERE i.user.username = :username ORDER BY i.uploadedTime DESC")
 	List<Image> findAllImagesByUserOrderByUploadedTimeDesc(@Param("username") String username, Pageable pageable);
 }

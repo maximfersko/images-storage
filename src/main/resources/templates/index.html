@@ -14,15 +14,15 @@
 </div>
 
 <!-- Tab Content -->
-<div id="upload" class="tab-content">
+<div class="tab-content" id="upload">
     <h2>Upload Image</h2>
-    <form id="uploadForm" enctype="multipart/form-data" method="POST">
-        <input name="file" type="file" id="fileInput"/>
-        <button type="submit" id="uploadButton">Upload</button>
+    <form enctype="multipart/form-data" id="uploadForm" method="POST">
+        <input id="fileInput" name="file" type="file"/>
+        <button id="uploadButton" type="submit">Upload</button>
     </form>
 </div>
 
-<div id="view" class="tab-content">
+<div class="tab-content" id="view">
     <h2>View Images</h2>
     <div id="images"></div>
     <div id="pagination">
