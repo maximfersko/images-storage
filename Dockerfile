@@ -4,7 +4,7 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline
 COPY src src
-RUN mvn clean package -DskipTests --no-transfer-progress
+RUN mvn clean package install -DskipTests --no-transfer-progress
 
 LABEL authors="maksimbobrov"
 

@@ -40,7 +40,7 @@ async function fetchImages(page) {
 }
 
 
-document.getElementById('uploadForm').addEventListener('submit', async function (e) {
+document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const fileInput = document.getElementById('fileInput');
