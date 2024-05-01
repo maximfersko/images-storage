@@ -2,6 +2,8 @@ package com.fersko.storage.controller;
 
 import com.fersko.storage.dto.SignInRequest;
 import com.fersko.storage.dto.SignUpRequest;
+import com.fersko.storage.dto.UserDto;
+import com.fersko.storage.mapper.UserMapper;
 import com.fersko.storage.security.AuthenticationService;
 import com.fersko.storage.security.TokenDetails;
 import lombok.AllArgsConstructor;
@@ -19,11 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
 	private final AuthenticationService authenticationService;
+	private final UserMapper userMapper;
 
 	@PostMapping("sign-up")
 	public ResponseEntity<?> signUp(@RequestBody SignUpRequest request) {
-		log.info("Sign up request received: {}", request);
-		return ResponseEntity.ok(authenticationService.signUp(request));
+		UserDto userDto = userMapper.toDto(authenticationService.signUp(request));
+		return ResponseEntity.ok(userDto);
 	}
 
 	@PostMapping("sign-in")

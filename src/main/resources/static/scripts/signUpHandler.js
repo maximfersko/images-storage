@@ -18,10 +18,13 @@ document.addEventListener("DOMContentLoaded", function () {
             body: json
         }).then(response => {
             if (response.ok) {
+                console.log("ok")
                 window.location.href = "/signin.html";
             } else {
+                console.log("throw")
                 response.text().then(text => {
-                    throw new Error(text)
+                    let exceptionLabel = document.getElementsByClassName("auth-exception");
+                    exceptionLabel[0].innerHTML = text;
                 });
             }
         }).catch(error => {

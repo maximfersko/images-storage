@@ -28,10 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 console.log('Token details:', data);
                 localStorage.setItem('token', data.token);
-                window.location.href = "/index.html";
+                window.location.href = "index";
             })
             .catch(error => {
-                console.error('Error during sign in:', error);
+                let exceptionLabel = document.getElementsByClassName("auth-exception");
+                exceptionLabel[0].innerHTML = error.text;
             });
     };
 });

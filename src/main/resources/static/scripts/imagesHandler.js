@@ -23,6 +23,7 @@ async function fetchImages(page) {
 
         imagesContainer.innerHTML = images.map(image => `
             <div>
+                <p>User with username: ${image.username} uploaded image</p>
                 <img src="/storage/image/${image.id}" alt="${image.name}" />
                 <p>Uploaded Time: ${image.uploadedTime}</p>
                 <p>Image Name: ${image.name}</p>

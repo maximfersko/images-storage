@@ -38,6 +38,15 @@ public class User {
 	@Column(name = "password")
 	private String password;
 
+	@Column(name = "firstname")
+	private String firstname;
+
+	@Column(name = "email")
+	private String email;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Token> tokens;
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Image> images;
 

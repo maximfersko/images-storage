@@ -37,7 +37,6 @@ public class Image {
 	@Column(name = "uploaded_date")
 	private LocalDateTime uploadedTime;
 
-
 	@Column(columnDefinition = "bytea")
 	private byte[] data;
 

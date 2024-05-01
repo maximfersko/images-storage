@@ -30,6 +30,22 @@ services:
       - db_data:/var/lib/postgresql/data
       - ./src/main/resources/db/init/tables.sql:/docker-entrypoint-initdb.d/table.sql
 
+  redis:
+    image: redis:7.2-rc-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    command:
+      - redis-server
+      - "--save"
+      - "20 1"
+      - "--loglevel"
+      - "warning"
+      - "--requirepass"
+      - "drtyduyfWEWEWiuhrtd"
+    volumes:
+      - cache:/data
 
 volumes:
   db_data:
+  cache:

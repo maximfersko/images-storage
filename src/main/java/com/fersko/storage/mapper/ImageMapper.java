@@ -11,6 +11,7 @@ public abstract class ImageMapper {
 
 	@Mapping(target = "uploadedTime", source = "uploadedTime")
 	@Mapping(target = "url", expression = "java(mapUrl(image.getId()))")
+	@Mapping(target = "username", source = "user.username")
 	public abstract ImageInfoDto imageToImageInfoDto(Image image);
 
 	protected String mapUrl(Long id) {
