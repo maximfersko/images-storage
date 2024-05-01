@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     var signInForm = document.getElementById("signIn");
-    signInForm.onsubmit = function (event) {
+    signInForm.onsubmit =  (event) => {
         event.preventDefault();
 
         var formData = new FormData(signInForm);
@@ -28,10 +28,13 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 console.log('Token details:', data);
                 localStorage.setItem('token', data.token);
-                window.location.href = "/index.html";
+                console.log(data.role)
+                localStorage.setItem('isAdmin', data.role)
+                window.location.href = "index";
             })
             .catch(error => {
-                console.error('Error during sign in:', error);
+                let exceptionLabel = document.getElementsByClassName("auth-exception");
+                exceptionLabel[0].innerHTML = error.text;
             });
     };
 });

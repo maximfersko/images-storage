@@ -9,27 +9,27 @@ public class MainController {
 
 	@GetMapping("/")
 	public String home() {
-		return "redirect:/signup.html";
+		return "redirect:/sign-up";
 	}
 
-	@GetMapping("/signup.html")
+	@GetMapping("/sign-up")
 	public String signupPage() {
 		return "signup";
 	}
 
-	@GetMapping("/signin.html")
+	@GetMapping("/sign-in")
 	public String signinPage() {
 		return "signin";
 	}
 
-	@GetMapping("/index.html")
+	@GetMapping("/index")
 	public String imagesPage() {
 		if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
 			System.out.println("User is authenticated");
 			return "index";
 		} else {
 			System.out.println("User is not authenticated, redirecting to sign in page.");
-			return "redirect:/signin.html";
+			return "redirect:/sign-in";
 		}
 	}
 }

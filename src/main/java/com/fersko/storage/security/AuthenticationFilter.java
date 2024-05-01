@@ -1,6 +1,8 @@
 package com.fersko.storage.security;
 
 import com.fersko.storage.service.UserService;
+import com.fersko.storage.service.impl.SecurityServiceImpl;
+import com.fersko.storage.utils.consts.AuthConsts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,22 +21,21 @@ import java.io.IOException;
 @AllArgsConstructor
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
-	public static final String BEARER_PREFIX = "Bearer ";
-	public static final String HEADER_NAME = "Authorization";
 
-	private final SecurityService securityService;
+
+	private final SecurityServiceImpl securityService;
 	private final UserService userService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-		String header = request.getHeader(HEADER_NAME);
+		String header = request.getHeader(AuthConsts.HEADER_NAME);
 
-		if (StringUtils.isBlank(header) || !header.startsWith(BEARER_PREFIX)) {
+		if (StringUtils.isBlank(header) || !header.startsWith(AuthConsts.BEARER_PREFIX)) {
 			filterChain.doFilter(request, response);
 			return;
 		}
 
-		String token = header.substring(BEARER_PREFIX.length());
+		String token = header.substring(AuthConsts.BEARER_PREFIX.length());
 		processToken(token, request);
 		filterChain.doFilter(request, response);
 	}

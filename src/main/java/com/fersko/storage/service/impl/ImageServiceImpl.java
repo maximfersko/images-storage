@@ -3,7 +3,6 @@ package com.fersko.storage.service.impl;
 import com.fersko.storage.entity.Image;
 import com.fersko.storage.entity.User;
 import com.fersko.storage.exceptions.ImageNotFoundException;
-import com.fersko.storage.mapper.ImageMapper;
 import com.fersko.storage.repository.ImageRepository;
 import com.fersko.storage.service.ImageService;
 import lombok.AllArgsConstructor;
@@ -17,10 +16,7 @@ import java.time.LocalDateTime;
 @Service
 @AllArgsConstructor
 public class ImageServiceImpl implements ImageService {
-	private static final int PAGE_SIZE = 10;
-
 	private final ImageRepository imageRepository;
-	private final ImageMapper imageMapper;
 
 	@Override
 	public Image save(MultipartFile image, User user) throws IOException {
@@ -32,6 +28,14 @@ public class ImageServiceImpl implements ImageService {
 				.data(image.getBytes())
 				.build();
 		return imageRepository.save(data);
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		if (!imageRepository.existsById(id)) {
+			throw new ImageNotFoundException(id);
+		}
+		imageRepository.deleteById(id);
 	}
 
 

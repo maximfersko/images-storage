@@ -13,9 +13,15 @@ public interface UserService {
 
 	UserDetails findByUsernameUserDetails(String username);
 
+	boolean existsUserByUsername(String username);
+
+	boolean existsUserByEmail(String email);
+
 	User findByUsername(String username);
 
 	List<ImageInfoDto> extractInfo(String username, Pageable pageable);
+
+	List<ImageInfoDto> findAllImages(Pageable pageable);
 
 	User save(User user);
 

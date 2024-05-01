@@ -1,11 +1,11 @@
 import {currentPage, updatePagination} from './pagination.js';
 
-
 async function fetchImages(page) {
     try {
         const token = localStorage.getItem('token');
-        console.log(token);
-        const response = await fetch(`/storage/image?page=${page}`, {
+        const isAdmin = localStorage.getItem("isAdmin") === "true";
+        const url = isAdmin ? '/storage/admin/image?page=' : '/storage/image?page=';
+        const response = await fetch(`${url}${page}`, {
             method: "GET",
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -23,9 +23,11 @@ async function fetchImages(page) {
 
         imagesContainer.innerHTML = images.map(image => `
             <div>
+                <p>User with username: ${image.username} uploaded image</p>
                 <img src="/storage/image/${image.id}" alt="${image.name}" />
                 <p>Uploaded Time: ${image.uploadedTime}</p>
                 <p>Image Name: ${image.name}</p>
+                <button class="delete-image-button" onclick="deleteImageById('${image.id}')">Delete</button>
             </div>
         `).join('');
         const paginationInfo = {
@@ -62,10 +64,29 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
 
         const data = await response.json();
         location.reload();
-        console.log('Upload successful', data);
     } catch (error) {
         console.error('Error during upload:', error);
     }
 });
+
+window.deleteImageById = async function deleteImage(imageId) {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`/storage/image/${imageId}`, {
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (response.ok) {
+            console.log("Image deleted successfully");
+            await fetchImages(currentPage);
+        } else {
+            console.error(`HTTP error! Status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Delete error:', error);
+    }
+}
 
 fetchImages(currentPage);

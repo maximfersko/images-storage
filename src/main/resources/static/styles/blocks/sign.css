@@ -43,3 +43,7 @@ button {
     text-align: center;
     margin-top: 15px;
 }
+
+.auth-exception {
+    color: red;
+}

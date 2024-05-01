@@ -6,6 +6,7 @@ function updatePagination({totalImages, currentPage, imagesPerPage}, fetchImages
     const imageCount = document.getElementById('image-count');
     pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
 
+
     prevButton.disabled = currentPage <= 1;
     prevButton.onclick = () => fetchImagesCallback(currentPage - 1);
 
