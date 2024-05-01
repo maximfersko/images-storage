@@ -1,4 +1,4 @@
-package com.fersko.storage.consts;
+package com.fersko.storage.utils.consts;
 
 public class AuthConsts {
 	public static final String BEARER_PREFIX = "Bearer ";

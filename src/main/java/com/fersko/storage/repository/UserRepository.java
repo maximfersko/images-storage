@@ -18,9 +18,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	boolean existsUserByEmail(String email);
 
 	@Query("""
-			SELECT i FROM Image i 
+			SELECT i 
+			FROM Image i 
 			WHERE i.user.username = :username 
 			ORDER BY i.uploadedTime DESC
 			""")
 	List<Image> findAllImagesByUserOrderByUploadedTimeDesc(@Param("username") String username, Pageable pageable);
+
+	@Query("""
+			SELECT i 
+			FROM Image i 
+			ORDER BY i.uploadedTime DESC
+			""")
+	List<Image> findAllImages(Pageable pageable);
 }

@@ -21,6 +21,8 @@ public interface UserService {
 
 	List<ImageInfoDto> extractInfo(String username, Pageable pageable);
 
+	List<ImageInfoDto> findAllImages(Pageable pageable);
+
 	User save(User user);
 
 	UserDetailsService userDetailsService();

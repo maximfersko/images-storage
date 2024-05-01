@@ -1,9 +1,9 @@
 package com.fersko.storage.config;
 
-import com.fersko.storage.consts.AuthConsts;
 import com.fersko.storage.entity.Token;
 import com.fersko.storage.exceptions.NotFoundTokenException;
 import com.fersko.storage.service.TokenService;
+import com.fersko.storage.utils.consts.AuthConsts;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;

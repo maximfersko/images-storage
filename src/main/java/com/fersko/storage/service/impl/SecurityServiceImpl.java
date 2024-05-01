@@ -1,12 +1,13 @@
-package com.fersko.storage.security;
+package com.fersko.storage.service.impl;
 
+import com.fersko.storage.dto.TokenDetails;
 import com.fersko.storage.entity.User;
+import com.fersko.storage.service.SecurityService;
 import com.fersko.storage.service.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -18,9 +19,8 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
-@Slf4j
 @RequiredArgsConstructor
-public class SecurityService {
+public class SecurityServiceImpl implements SecurityService {
 
 	private final TokenService tokenService;
 	@Value("${jwt.token.secret}")
@@ -28,19 +28,20 @@ public class SecurityService {
 	@Value("${jwt.token.expiration}")
 	private Integer expirationSec;
 
+	@Override
 	public String extractUsername(String token) {
 		return extractClaims(token).getSubject();
 	}
 
+	@Override
 	public boolean isValid(String token, UserDetails userDetails) {
 		boolean valid = tokenService.findByToken(token)
 				.map(tkn -> !tkn.isLoggedOut())
 				.orElse(false);
-		log.info("isValid() returned {}", valid);
 		return (extractUsername(token).equals(userDetails.getUsername()) && !isTokenExpired(token) && valid);
 	}
 
-	public Claims extractClaims(String token) {
+	private Claims extractClaims(String token) {
 		return Jwts.parserBuilder()
 				.setSigningKey(getSignedKey())
 				.build()
@@ -52,6 +53,7 @@ public class SecurityService {
 		return expiration.before(new Date());
 	}
 
+	@Override
 	public TokenDetails generateToken(UserDetails user) {
 		Map<String, Object> claims = new HashMap<>();
 		if (user instanceof User customUserDetails) {

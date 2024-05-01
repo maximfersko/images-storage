@@ -1,17 +1,15 @@
-package com.fersko.storage.security.impl;
+package com.fersko.storage.service.impl;
 
 import com.fersko.storage.dto.SignInRequest;
 import com.fersko.storage.dto.SignUpRequest;
+import com.fersko.storage.dto.TokenDetails;
 import com.fersko.storage.entity.Role;
 import com.fersko.storage.entity.Token;
 import com.fersko.storage.entity.User;
 import com.fersko.storage.exceptions.AuthenticateException;
-import com.fersko.storage.security.AuthenticationService;
-import com.fersko.storage.security.SecurityService;
-import com.fersko.storage.security.TokenDetails;
+import com.fersko.storage.service.AuthenticationService;
 import com.fersko.storage.service.TokenService;
 import com.fersko.storage.service.UserService;
-import com.fersko.storage.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,11 +29,10 @@ import java.util.List;
 @Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
 	private final UserService userService;
-	private final SecurityService securityService;
+	private final SecurityServiceImpl securityService;
 	private final AuthenticationManager authenticationManager;
 	private final PasswordEncoder passwordEncoder;
 	private final TokenService tokenService;
-	private final UserServiceImpl userServiceImpl;
 
 	@Transactional
 	@Override
@@ -46,11 +43,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		if (authentication.isAuthenticated()) {
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			TokenDetails token = securityService.generateToken(userDetails);
+			User user = userService.findByUsername(request.username());
+			TokenDetails token = securityService.generateToken(userDetails).toBuilder()
+					.role(user.getRole())
+					.build();
 
-			User user = userServiceImpl.findByUsername(request.username());
 			Token tokenEntity = Token.builder()
-					.token(token.getToken())
+					.token(token.token())
 					.loggedOut(false)
 					.user(user)
 					.build();
@@ -65,14 +64,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	private void revokeAllTokenByUser(User user) {
 		List<Token> validTokens = tokenService.findAllByTokenByUserId(user.getId());
-		log.info(validTokens.toString());
 		if (!validTokens.isEmpty()) {
 			validTokens.forEach(validToken -> validToken.setLoggedOut(true));
 			tokenService.saveAll(validTokens);
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = AuthenticateException.class)
 	@Override
 	public User signUp(SignUpRequest request) {
 		if (userService.existsUserByUsername(request.username())) {
@@ -81,8 +79,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		if (userService.existsUserByEmail(request.email())) {
 			throw new AuthenticateException("The email already exists", "DUPLICATE_LOGIN_EMAIL");
 		}
+		log.info("Creating new user {}", request.isAdmin());
 		User user = User.builder()
-				.role(Role.USER)
+				.role(request.isAdmin() ? Role.ADMINISTRATOR : Role.USER)
 				.firstname(request.firstname())
 				.email(request.email())
 				.active(true)

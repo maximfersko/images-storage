@@ -9,6 +9,8 @@ import java.io.IOException;
 public interface ImageService {
 	Image save(MultipartFile image, User user) throws IOException;
 
+	void deleteById(Long id);
 
 	Image findImageById(Long id);
+
 }

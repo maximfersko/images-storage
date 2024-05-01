@@ -1,7 +1,8 @@
 package com.fersko.storage.security;
 
-import com.fersko.storage.consts.AuthConsts;
 import com.fersko.storage.service.UserService;
+import com.fersko.storage.service.impl.SecurityServiceImpl;
+import com.fersko.storage.utils.consts.AuthConsts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ import java.io.IOException;
 public class AuthenticationFilter extends OncePerRequestFilter {
 
 
-	private final SecurityService securityService;
+	private final SecurityServiceImpl securityService;
 	private final UserService userService;
 
 	@Override

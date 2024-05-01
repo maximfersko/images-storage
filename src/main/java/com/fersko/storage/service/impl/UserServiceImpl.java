@@ -9,7 +9,6 @@ import com.fersko.storage.security.UserDetailsFactory;
 import com.fersko.storage.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -54,13 +53,22 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-//	@Cacheable(value = "images", key = "#username.concat('-').concat(#pageable.pageNumber)")
 	public List<ImageInfoDto> extractInfo(String username, Pageable pageable) {
 		List<Image> images = userRepository.
 				findAllImagesByUserOrderByUploadedTimeDesc(username, pageable);
+		return getImageInfoDtos(images);
+	}
+
+	private List<ImageInfoDto> getImageInfoDtos(List<Image> images) {
 		return images.stream()
 				.map(imageMapper::imageToImageInfoDto)
 				.toList();
+	}
+
+	@Override
+	public List<ImageInfoDto> findAllImages(Pageable pageable) {
+		List<Image> allImages = userRepository.findAllImages(pageable);
+		return getImageInfoDtos(allImages);
 	}
 
 

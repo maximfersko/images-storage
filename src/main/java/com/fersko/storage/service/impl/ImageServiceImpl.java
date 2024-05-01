@@ -6,7 +6,6 @@ import com.fersko.storage.exceptions.ImageNotFoundException;
 import com.fersko.storage.repository.ImageRepository;
 import com.fersko.storage.service.ImageService;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +19,6 @@ public class ImageServiceImpl implements ImageService {
 	private final ImageRepository imageRepository;
 
 	@Override
-//	@CacheEvict(value = "images", key = "#user.username", allEntries = true)
 	public Image save(MultipartFile image, User user) throws IOException {
 		String fileName = StringUtils.cleanPath(image.getOriginalFilename());
 		Image data = Image.builder()
@@ -30,6 +28,14 @@ public class ImageServiceImpl implements ImageService {
 				.data(image.getBytes())
 				.build();
 		return imageRepository.save(data);
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		if (!imageRepository.existsById(id)) {
+			throw new ImageNotFoundException(id);
+		}
+		imageRepository.deleteById(id);
 	}
 
 

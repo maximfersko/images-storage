@@ -4,7 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
 
         var formData = new FormData(signUpForm);
-        var data = {};
+        const isAdmin = document.getElementById('isAdmin');
+        localStorage.setItem("isAdmin", isAdmin.checked);
+        var data = {
+            'isAdmin': localStorage.getItem("isAdmin")
+        };
         formData.forEach(function (value, key) {
             data[key] = value;
         });
@@ -19,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }).then(response => {
             if (response.ok) {
                 console.log("ok")
-                window.location.href = "/signin.html";
+                window.location.href = "/sign-in";
             } else {
                 console.log("throw")
                 response.text().then(text => {
