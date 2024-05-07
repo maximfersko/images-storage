@@ -2,12 +2,12 @@ package com.fersko.storage.repository;
 
 import com.fersko.storage.entity.Image;
 import com.fersko.storage.entity.User;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -23,12 +23,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 			WHERE i.user.username = :username 
 			ORDER BY i.uploadedTime DESC
 			""")
-	List<Image> findAllImagesByUserOrderByUploadedTimeDesc(@Param("username") String username, Pageable pageable);
+	Page<Image> findAllImagesByUserOrderByUploadedTimeDesc(@Param("username") String username, Pageable pageable);
 
 	@Query("""
 			SELECT i 
 			FROM Image i 
 			ORDER BY i.uploadedTime DESC
 			""")
-	List<Image> findAllImages(Pageable pageable);
+	Page<Image> findAllImages(Pageable pageable);
 }

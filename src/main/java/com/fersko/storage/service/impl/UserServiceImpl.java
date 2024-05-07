@@ -9,6 +9,7 @@ import com.fersko.storage.security.UserDetailsFactory;
 import com.fersko.storage.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -53,24 +53,21 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ImageInfoDto> extractInfo(String username, Pageable pageable) {
-		List<Image> images = userRepository.
+	public Page<ImageInfoDto> extractInfo(String username, Pageable pageable) {
+		Page<Image> images = userRepository.
 				findAllImagesByUserOrderByUploadedTimeDesc(username, pageable);
 		return getImageInfoDtos(images);
 	}
 
-	private List<ImageInfoDto> getImageInfoDtos(List<Image> images) {
-		return images.stream()
-				.map(imageMapper::imageToImageInfoDto)
-				.toList();
+	private Page<ImageInfoDto> getImageInfoDtos(Page<Image> images) {
+		return images.map(imageMapper::imageToImageInfoDto);
 	}
 
 	@Override
-	public List<ImageInfoDto> findAllImages(Pageable pageable) {
-		List<Image> allImages = userRepository.findAllImages(pageable);
+	public Page<ImageInfoDto> findAllImages(Pageable pageable) {
+		Page<Image> allImages = userRepository.findAllImages(pageable);
 		return getImageInfoDtos(allImages);
 	}
-
 
 	@Override
 	public User save(User user) {

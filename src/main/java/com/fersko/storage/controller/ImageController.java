@@ -1,7 +1,6 @@
 package com.fersko.storage.controller;
 
 import com.fersko.storage.dto.ImageInfoDto;
-import com.fersko.storage.entity.Image;
 import com.fersko.storage.entity.User;
 import com.fersko.storage.exceptions.FileUploadException;
 import com.fersko.storage.exceptions.ImageNotFoundException;
@@ -9,12 +8,12 @@ import com.fersko.storage.service.ImageService;
 import com.fersko.storage.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,9 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -57,29 +55,34 @@ public class ImageController {
 		return "redirect:/storage";
 	}
 
-
 	@GetMapping("/image")
 	@ResponseBody
-	public List<ImageInfoDto> getAllImagesByUser(@RequestParam("page") int page) {
+	public ResponseEntity<Map<String, Object>> getAllImagesByUser(@RequestParam("page") int page) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
-		return userService.extractInfo(username, PageRequest.of(page, PAGE_SIZE));
+
+		Page<ImageInfoDto> imagePage = userService.extractInfo(username, PageRequest.of(page, PAGE_SIZE));
+
+		return getMapResponse(imagePage);
 	}
 
 	@GetMapping("/admin/image")
+//	@PreAuthorize("")
 	@ResponseBody
-	public List<ImageInfoDto> getAllImagesByAdmin(@RequestParam("page") int page) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null) {
-			Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-			for (GrantedAuthority authority : authorities) {
-				String roleName = authority.getAuthority();
-				if ("ADMINISTRATOR".equals(roleName)) {
-					return userService.findAllImages(PageRequest.of(page, PAGE_SIZE));
-				}
-			}
-		}
-		return new ArrayList<>();
+	public ResponseEntity<Map<String, Object>> getAllImagesByAdmin(@RequestParam("page") int page) {
+		Page<ImageInfoDto> images = userService.findAllImages(PageRequest.of(page, PAGE_SIZE));
+		return getMapResponse(images);
+	}
+
+	private ResponseEntity<Map<String, Object>> getMapResponse(Page<ImageInfoDto> images) {
+		return ResponseEntity.ok(
+				new HashMap<>() {{
+					put("images", images.getContent());
+					put("currentPage", images.getNumber());
+					put("totalItems", images.getTotalElements());
+					put("totalPages", images.getTotalPages());
+				}}
+		);
 	}
 
 	@GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)

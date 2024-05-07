@@ -1,15 +1,15 @@
-document.addEventListener("DOMContentLoaded", function () {
-    var signInForm = document.getElementById("signIn");
-    signInForm.onsubmit =  (event) => {
+document.addEventListener("DOMContentLoaded", () => {
+    const signInForm = document.getElementById("signIn");
+    signInForm.onsubmit = (event) => {
         event.preventDefault();
 
-        var formData = new FormData(signInForm);
-        var data = {};
+        const formData = new FormData(signInForm);
+        let data = {};
         formData.forEach(function (value, key) {
             data[key] = value;
         });
         console.log(data)
-        var json = JSON.stringify(data);
+        const json = JSON.stringify(data);
         fetch("/api/v1/auth/sign-in", {
             method: "POST",
             headers: {

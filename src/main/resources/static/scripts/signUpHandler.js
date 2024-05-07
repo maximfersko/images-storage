@@ -1,18 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
-    var signUpForm = document.getElementById("signUp");
+    const signUpForm = document.getElementById("signUp");
     signUpForm.onsubmit = function (event) {
         event.preventDefault();
 
-        var formData = new FormData(signUpForm);
+        let formData = new FormData(signUpForm);
         const isAdmin = document.getElementById('isAdmin');
         localStorage.setItem("isAdmin", isAdmin.checked);
-        var data = {
+        const data = {
             'isAdmin': localStorage.getItem("isAdmin")
         };
         formData.forEach(function (value, key) {
             data[key] = value;
         });
-        var json = JSON.stringify(data);
+        const json = JSON.stringify(data);
 
         fetch("/api/v1/auth/sign-up", {
             method: "POST",

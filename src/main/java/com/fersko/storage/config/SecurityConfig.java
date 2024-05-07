@@ -1,5 +1,6 @@
 package com.fersko.storage.config;
 
+import com.fersko.storage.entity.Role;
 import com.fersko.storage.security.AuthenticationFilter;
 import com.fersko.storage.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class SecurityConfig {
 
 	private final AuthenticationFilter authenticationFilter;
 	private final UserService userService;
-	private final CustomLogouHandler logoutHandler;
+	private final CustomLogoutHandler logoutHandler;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -50,6 +51,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
 						.requestMatchers("/api/v1/auth/**").permitAll()
 						.requestMatchers("/storage/image/**").permitAll()
+						.requestMatchers("/storage/admin/**").hasAuthority(Role.ADMINISTRATOR.name())
 						.requestMatchers("/storage/**").authenticated()
 						.anyRequest().permitAll()
 				)

@@ -43,7 +43,7 @@ button:disabled {
 }
 
 img {
-    width: auto;
+    width: 80%;
     height: auto;
     display: block;
     margin: 0 auto;

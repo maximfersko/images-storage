@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class CustomLogouHandler implements LogoutHandler {
+public class CustomLogoutHandler implements LogoutHandler {
 	private final TokenService tokenService;
 
 	@Override

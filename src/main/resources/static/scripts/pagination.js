@@ -1,20 +1,34 @@
-let currentPage = 0;
+export class Pagination {
+    constructor(currentPage, totalPages, onPageChange) {
+        this.currentPage = currentPage;
+        this.totalPages = totalPages;
+        this.onPageChange = onPageChange;
 
-function updatePagination({totalImages, currentPage, imagesPerPage}, fetchImagesCallback) {
-    const totalPages = Math.ceil(totalImages / imagesPerPage);
-    const pageInfo = document.getElementById('page-info');
-    const imageCount = document.getElementById('image-count');
-    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+        this.prevButton = document.getElementById('prev');
+        this.nextButton = document.getElementById('next');
+        this.pageInfo = document.getElementById('page-info');
 
+        this.prevButton.addEventListener('click', () => this.onPrevClick());
+        this.nextButton.addEventListener('click', () => this.onNextClick());
+    }
 
-    prevButton.disabled = currentPage <= 1;
-    prevButton.onclick = () => fetchImagesCallback(currentPage - 1);
+    updatePaginationControls() {
+        this.pageInfo.textContent = `Page ${this.currentPage + 1} of ${this.totalPages}`;
+        this.prevButton.disabled = this.currentPage <= 0;
+        this.nextButton.disabled = this.currentPage >= this.totalPages - 1;
+    }
 
-    nextButton.disabled = currentPage >= totalPages;
-    nextButton.onclick = () => fetchImagesCallback(currentPage + 1);
+    onPrevClick() {
+        if (this.currentPage > 0) {
+            this.currentPage--;
+            this.onPageChange(this.currentPage);
+        }
+    }
 
-    imageCount.textContent = `${Math.min(imagesPerPage, totalImages - (currentPage - 1) * imagesPerPage)} images on this page`;
+    onNextClick() {
+        if (this.currentPage < this.totalPages - 1) {
+            this.currentPage++;
+            this.onPageChange(this.currentPage);
+        }
+    }
 }
-
-
-export {currentPage, updatePagination};

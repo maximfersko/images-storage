@@ -9,5 +9,5 @@ public record ImageInfoDto(
 		String name,
 		LocalDateTime uploadedTime,
 		String url
-) implements Serializable {
+) {
 }

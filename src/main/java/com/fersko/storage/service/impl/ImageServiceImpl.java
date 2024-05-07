@@ -43,4 +43,5 @@ public class ImageServiceImpl implements ImageService {
 	public Image findImageById(Long id) {
 		return imageRepository.findById(id).orElseThrow(() -> new ImageNotFoundException(id));
 	}
+
 }
