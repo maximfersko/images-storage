@@ -1,6 +1,5 @@
 package com.fersko.storage.dto;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public record ImageInfoDto(
