@@ -8,7 +8,9 @@ export class ImageService {
 
     async fetchImages(page = 0) {
         const isAdmin = localStorage.getItem("isAdmin") === "true";
+        console.log(isAdmin)
         const url = isAdmin ? `${this.apiUrl}/admin/image?page=${page}` : `${this.apiUrl}/image?page=${page}`;
+        console.log(url)
         const response = await fetch(url, {
             method: "GET",
             headers: {
@@ -24,6 +26,27 @@ export class ImageService {
         this.totalPages = data.totalPages;
         this.currentPage = data.currentPage;
         return data.images;
+    }
+
+    async getUserInfo() {
+        try {
+            const response = await fetch(`${this.apiUrl}/user/info`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const userInfo = await response.json();
+            const isAdmin = userInfo.role === "ADMINISTRATOR";
+             localStorage.setItem("isAdmin",isAdmin);
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+        }
     }
 
     async deleteImageById(imageId) {

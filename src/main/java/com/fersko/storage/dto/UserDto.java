@@ -14,8 +14,6 @@ public record UserDto(
 		String firstname,
 		String email,
 		boolean active,
-		List<Image> images,
-		LocalDateTime createdAt,
 		Role role
 ) {
 }

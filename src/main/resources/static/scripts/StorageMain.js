@@ -3,7 +3,9 @@ import {ImageUI} from "./ImageUI.js";
 
 const imageService = new ImageService("/storage");
 const imageUI = new ImageUI(imageService);
-imageUI.refreshImages();
+imageService.getUserInfo().then(() => {
+    imageUI.refreshImages();
+});
 
 document.getElementById('uploadForm').addEventListener('submit', async (e) => {
     e.preventDefault();

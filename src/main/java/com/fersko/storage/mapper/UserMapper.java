@@ -9,9 +9,7 @@ import org.mapstruct.Mapping;
 public interface UserMapper {
 
 	@Mapping(target = "username", source = "username")
-	@Mapping(target = "images", source = "images")
 	@Mapping(target = "role", source = "role")
-	@Mapping(target = "createdAt", source = "createdAt")
 	@Mapping(target = "active", source = "active")
 	@Mapping(target = "firstname", source = "firstname")
 	@Mapping(target = "email", source = "email")
