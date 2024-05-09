@@ -43,7 +43,7 @@ export class ImageService {
 
             const userInfo = await response.json();
             const isAdmin = userInfo.role === "ADMINISTRATOR";
-             localStorage.setItem("isAdmin",isAdmin);
+            localStorage.setItem("isAdmin", isAdmin);
         } catch (error) {
             console.error('Error fetching user info:', error);
         }

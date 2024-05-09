@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/storage")
 public class UserController {
 	private final UserService userService;
-private final UserMapper userMapper;
+	private final UserMapper userMapper;
 
 	@GetMapping("/user/info")
 	public ResponseEntity<UserDto> getCurrentUserInfo(Authentication authentication) {
