@@ -7,9 +7,12 @@
 </head>
 <body>
 
-<div class="tabs">
-    <button class="tab-link" onclick="openTab(event, 'upload')">Upload Image</button>
-    <button class="tab-link" onclick="openTab(event, 'view')">View Images</button>
+<div class="header">
+    <div class="tabs">
+        <button class="tab-link" onclick="openTab(event, 'upload')">Upload Image</button>
+        <button class="tab-link" onclick="openTab(event, 'view')">View Images</button>
+    </div>
+    <button class="logout-button" id="logoutButton">Logout</button>
 </div>
 
 <div class="tab-content" id="upload">
@@ -19,7 +22,6 @@
         <button id="uploadButton" type="submit">Upload</button>
     </form>
 </div>
-<button class="logout-button" id="logoutButton">Logout</button>
 <div class="tab-content" id="view">
     <h2>View Images</h2>
     <div id="images"></div>

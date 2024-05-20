@@ -1,13 +1,15 @@
-
 .tab-link {
-    background-color: #f1f1f1;
-    float: left;
+    background-color: rgba(198, 198, 198, 0.36);
     border: none;
     outline: none;
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
     font-size: 17px;
+}
+
+.tabs {
+    display: flex;
 }
 
 .tab-link:hover {
@@ -18,14 +20,14 @@
     background-color: #ccc;
 }
 
-
 .tab-content {
     display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
 }
-
 
 .tabs:after {
     content: "";

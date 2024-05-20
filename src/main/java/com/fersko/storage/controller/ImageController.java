@@ -67,7 +67,6 @@ public class ImageController {
 	}
 
 	@GetMapping("/admin/image")
-//	@PreAuthorize("")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> getAllImagesByAdmin(@RequestParam("page") int page) {
 		Page<ImageInfoDto> images = userService.findAllImages(PageRequest.of(page, PAGE_SIZE));

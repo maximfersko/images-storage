@@ -30,6 +30,5 @@ services:
       - db_data:/var/lib/postgresql/data
       - ./src/main/resources/db/init/tables.sql:/docker-entrypoint-initdb.d/table.sql
 
-
 volumes:
   db_data:
