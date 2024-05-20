@@ -1,4 +1,5 @@
 ## Images storage
+
 This project is a web application designed for uploading and storing photos.
 
 ### Build and Run:
@@ -9,19 +10,24 @@ This project is a web application designed for uploading and storing photos.
     docker-compose up
 ```
 
-
 ### Description and Features
 
-The application supports two user roles: administrator and user. Users can upload and delete their own images, while administrators have access to and can delete images from all users. During registration, a user can specify their role by checking the "Register as Admin" checkbox.
+The application supports two user roles: administrator and user. Users can upload and delete their own images, while
+administrators have access to and can delete images from all users. During registration, a user can specify their role
+by checking the "Register as Admin" checkbox.
 
 #### Registration Page
+
 ![](/images/sign-up.png)
 
 After logging in, the user dashboard provides two tabs:
 
 #### Upload Images
+
 ![](/images/upload.png)
+
 #### View Images
+
 ![](/images/view.png)
 
 ## Database Schema
@@ -42,8 +48,11 @@ After logging in, the user dashboard provides two tabs:
 * Spring Boot DevTools: org.springframework.boot:spring-boot-devtools
 * PostgreSQL Driver: org.postgresql:postgresql
 * Lombok: org.projectlombok:lombok
+
 ### Additional Properties
+
 Java Version: 17
+
 * MapStruct Version: 1.5.5.Final
 * JWT Version: 0.11.5
 * Hibernate Validator Version: 8.0.1.Final
