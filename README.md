@@ -51,7 +51,7 @@ After logging in, the user dashboard provides two tabs:
 
 ### Additional Properties
 
-*Java Version: 17
+* Java Version: 17
 * MapStruct Version: 1.5.5.Final
 * JWT Version: 0.11.5
 * Hibernate Validator Version: 8.0.1.Final
